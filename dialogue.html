@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>績效面談對話紀錄</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* 自定義樣式來讓卡片內容更好看 */
+        .dialogue-card {
+            background-color: #fff;
+            border-radius: 0.75rem; /* rounded-lg */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-xl */
+            padding: 1.5rem; /* p-6 */
+            margin-bottom: 1.5rem; /* mb-6 */
+        }
+        .dialogue-round-title {
+            font-size: 1.75rem; /* text-3xl */
+            font-weight: 700; /* font-bold */
+            color: #1d4ed8; /* text-blue-700 */
+            margin-bottom: 1rem; /* mb-4 */
+            border-bottom: 2px solid #bfdbfe; /* border-blue-200 */
+            padding-bottom: 0.5rem; /* pb-2 */
+        }
+        .speaker-label {
+            font-weight: 600; /* font-semibold */
+            color: #4b5563; /* text-gray-700 */
+        }
+        .speaker-text {
+            margin-left: 0.5rem; /* ml-2 */
+            margin-bottom: 0.75rem; /* mb-3 */
+            line-height: 1.75; /* leading-relaxed */
+            color: #374151; /* text-gray-800 */
+        }
+        .prose-custom {
+            font-size: 1.125rem; /* text-lg */
+            line-height: 1.75rem; /* leading-relaxed */
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800 p-8 font-sans">
+    
+    <div class="container mx-auto max-w-4xl">
+        <header class="text-center mb-12 flex justify-between items-center bg-white rounded-lg shadow-md p-6">
+            <div class="flex-grow">
+                <h1 class="text-4xl font-extrabold text-blue-800 mb-2">績效面談對話紀錄</h1>
+            </div>
+            <div class="flex space-x-4">
+                <a href="index.html" class="px-6 py-2 rounded-lg font-bold bg-gray-300 text-gray-800 hover:bg-gray-400 transition duration-300 shadow-md">儀表板</a>
+                <a href="dialogue.html" class="px-6 py-2 rounded-lg font-bold bg-blue-600 text-white hover:bg-blue-700 transition duration-300 shadow-md">對話紀錄</a>
+            </div>
+        </header>
+
+        <section id="dialogue-content" class="prose-custom"></section>
+        
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            fetch('data.txt')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.text();
+                })
+                .then(data => {
+                    const contentDiv = document.getElementById('dialogue-content');
+                    // 使用正則表達式根據「第X輪」分割對話
+                    const rounds = data.split(/(第\S+輪)/).filter(Boolean); // 移除空字串
+
+                    let htmlOutput = '';
+                    for (let i = 0; i < rounds.length; i++) {
+                        if (rounds[i].startsWith('第') && rounds[i].endsWith('輪')) {
+                            const roundTitle = rounds[i];
+                            const roundContent = rounds[i + 1] || ''; // 取得該輪的內容
+
+                            htmlOutput += `<div class="dialogue-card">`;
+                            htmlOutput += `<h2 class="dialogue-round-title">${roundTitle}</h2>`;
+
+                            // 進一步分割主管和員工的對話
+                            const dialogues = roundContent.split(/(主管：|員工：)/).filter(Boolean);
+                            for (let j = 0; j < dialogues.length; j++) {
+                                if (dialogues[j].startsWith('主管：') || dialogues[j].startsWith('員工：')) {
+                                    const speaker = dialogues[j].replace('：', '');
+                                    const text = dialogues[j + 1] ? dialogues[j + 1].trim() : '';
+                                    if (text) { // 確保有內容才顯示
+                                        htmlOutput += `
+                                            <div class="flex mb-2">
+                                                <span class="speaker-label">${speaker}：</span>
+                                                <p class="speaker-text flex-1">${text.replace(/\n/g, '<br>')}</p>
+                                            </div>
+                                        `;
+                                    }
+                                    j++; // 跳過下一個文本內容，因為已經處理了
+                                }
+                            }
+                            htmlOutput += `</div>`;
+                            i++; // 跳過下一個內容，因為已經處理了
+                        }
+                    }
+                    contentDiv.innerHTML = htmlOutput;
+
+                })
+                .catch(error => {
+                    console.error('Error fetching dialogue file:', error);
+                    document.getElementById('dialogue-content').innerHTML = `<p class="text-red-500 p-4 bg-red-50 rounded-lg shadow">無法載入對話紀錄。請確認 ` + '`績效面談範例對話12輪.txt`' + ` 檔案與此網頁在同一個資料夾中。</p>`;
+                });
+        });
+    </script>
+
+</body>
+</html>
