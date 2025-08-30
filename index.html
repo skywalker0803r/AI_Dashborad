@@ -160,7 +160,7 @@
 
             // 渲染 STAR 框架
             const starContainer = document.getElementById('star-analysis');
-            const starMap = { "S": "情境 (Situation)", "T": "任務 (Task)", "A": "行動 (Action)", "R": "結果 (Result)" };
+            const starMap = { "situation": "情境 (Situation)", "task": "任務 (Task)", "action": "行動 (Action)", "result": "結果 (Result)" };
             for (const key in jsonData.star_analysis) {
                 starContainer.innerHTML += `
                     <div>
@@ -172,7 +172,7 @@
 
             // 渲染 GROW 框架
             const growContainer = document.getElementById('grow-evaluation');
-            const growMap = { "G": "目標 (Goal)", "R": "現實 (Reality)", "O": "選擇 (Options)", "W": "意願 (Will)" };
+            const growMap = { "goal": "目標 (Goal)", "reality": "現實 (Reality)", "options": "選擇 (Options)", "will": "意願 (Will)" };
             for (const key in jsonData.grow_evaluation) {
                 growContainer.innerHTML += `
                     <div>
