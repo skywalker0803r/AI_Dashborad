@@ -1,0 +1,57 @@
+{
+  "report_title": "績效報告",
+  "employee_name": "王小明",
+  "period": "2025年第一季度",
+  "star_analysis": {
+    "situation": "在本季度，市場利率波動較大，客戶對貸款與基金產品持觀望態度。同時，面對複雜的客戶財務狀況與跨部門溝通障礙，需要靈活應對。",
+    "task": "核心任務為達成放貸與基金銷售雙重目標，並有效處理複雜案件與客訴，同時維繫並開發高資產客戶。",
+    "action": "在放貸業務上，你主動透過「說故事」方式向風控部門溝通，解決複雜案件的阻力。在基金銷售上，你從單純產品介紹轉向需求導向溝通與案例分享，有效提升成交率。面對客訴，你展現了高度的情緒管理與溝通技巧，從根本上解決問題。同時，你主動思考如何將經驗系統化，展現了從「解決問題」到「預見問題」的思維轉變。",
+    "result": "本季度成功超額完成了放貸與基金銷售的雙重目標。多筆大額貸款順利放款，基金銷售的客戶成交數與金額均有顯著成長。透過有效的溝通與協調，不僅增強了客戶信任，也提升了部門協作效率，將單一客訴轉化為流程優化機會。"
+  },
+  "grow_evaluation": {
+    "goal": "下一階段目標為不僅是維持現有業績，更要著眼於提升客戶的平均資產規模，並將處理客訴的經驗系統化，轉化為更完善的服務流程與內部知識庫。",
+    "reality": "你目前的強項在於執行力與應變能力，但在高資產客戶的開發經驗上相對較少，且對潛在客戶的「洞察力」仍有提升空間。",
+    "options": "建議參與高資產客戶維護與開發的內部培訓；與資深同事進行經驗交流，學習如何建立高層次信任關係；在與客戶互動時，練習提出更深層次的問題；將成功經驗撰寫成簡短的SOP，分享給團隊。",
+    "will": "你已展現出強烈的成長意願。我相信，只要持續學習與實踐，並將業務思維從「解決」提升到「預見」的層次，將在下一階段取得突破性成就。"
+  },
+  "overall_rating": {
+    "score": 4.5,
+    "reason": "你的表現超出了我的預期。除了達成甚至超越目標外，你還展現了獨立思考與主動解決問題的能力。特別是你在面對挑戰時的態度，不僅僅是完成任務，更是在其中尋找成長的機會，這一點非常難得。"
+  },
+  "capabilities": {
+    "radar_chart": {
+      "execution": 4.5,
+      "communication": 4.8,
+      "problem_solving": 4.7,
+      "customer_insight": 3.5,
+      "strategic_thinking": 3.8,
+      "proactiveness": 4.9
+    },
+    "scatter_plot": [
+      { "capability": "Execution", "score": 4.5, "improvement": "High" },
+      { "capability": "Communication", "score": 4.8, "improvement": "Medium" },
+      { "capability": "Problem-Solving", "score": 4.7, "improvement": "Medium" },
+      { "capability": "Customer-Insight", "score": 3.5, "improvement": "High" },
+      { "capability": "Strategic-Thinking", "score": 3.8, "improvement": "High" },
+      { "capability": "Proactiveness", "score": 4.9, "improvement": "Low" }
+    ],
+    "word_cloud": [
+      { "text": "主動", "value": 15 },
+      { "text": "溝通", "value": 12 },
+      { "text": "應變", "value": 10 },
+      { "text": "解決問題", "value": 9 },
+      { "text": "洞察力", "value": 8 },
+      { "text": "協調", "value": 7 },
+      { "text": "信任", "value": 6 },
+      { "text": "挑戰", "value": 5 },
+      { "text": "成長", "value": 5 },
+      { "text": "預見", "value": 4 }
+    ],
+    "heat_map": {
+      "q1_loan_sales": 5,
+      "q1_fund_sales": 4.5,
+      "cross_department_collaboration": 4.8,
+      "customer_satisfaction": 4.7
+    }
+  }
+}
