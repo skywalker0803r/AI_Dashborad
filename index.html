@@ -57,6 +57,7 @@
                 </div>
             </div>
         </section>
+
         <section class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
             <div class="bg-indigo-50 p-6 rounded-lg shadow">
                 <h2 class="text-2xl font-bold text-indigo-700 mb-2">本季放貸業績</h2>
@@ -67,7 +68,6 @@
                 <p class="text-xl font-medium" id="kpi-fund-growth"></p>
             </div>
         </section>
-
 
         <section class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
             <div class="bg-gray-50 p-6 rounded-lg shadow">
@@ -117,13 +117,12 @@
             </div>
         </section>
 
-        
         <section class="bg-gray-50 p-6 rounded-lg shadow mb-12">
             <h2 class="text-2xl font-bold text-gray-800 border-b-2 border-gray-200 pb-2 mb-4">下一季行動計畫</h2>
             <ul id="action-plan" class="space-y-2 list-disc list-inside text-gray-700"></ul>
         </section>
 
-<section class="bg-blue-900 text-white p-8 rounded-lg shadow-xl">
+        <section class="bg-blue-900 text-white p-8 rounded-lg shadow-xl">
             <h2 class="text-3xl font-bold mb-4">總結與評語：洞見、策略與行動</h2>
             <p class="text-lg leading-relaxed mb-4" id="overall-reason"></p>
         </section>
@@ -134,18 +133,11 @@
           "report_title": "績效報告：洞見、策略與行動",
           "employee_name": "王小明",
           "period": "2025年第一季度",
-          
           "kpis": {
             "q1_loan_sales": 1.25,
             "q1_fund_sales_growth_rate": "25%"
           },
-          "next_quarter_plan": [
-            "在維持現有業績的基礎上，開發更多高資產客戶。",
-            "將處理客訴和跨部門溝通的經驗，整理成一份SOP，分享給團隊。",
-            "參與相關的高資產客戶維護與開發培訓。",
-            "與資深同事進行經驗交流，學習建立高層次信任關係。"
-],
-"star_analysis": {
+          "star_analysis": {
             "situation": "在本季度，市場利率波動較大，客戶對貸款與基金產品持觀望態度。同時，面對複雜的客戶財務狀況與跨部門溝通障礙，需要靈活應對。",
             "task": "核心任務為達成放貸與基金銷售雙重目標，並有效處理複雜案件與客訴，同時維繫並開發高資產客戶。",
             "action": "在放貸業務上，你主動透過「說故事」方式向風控部門溝通，解決複雜案件的阻力。在基金銷售上，你從單純產品介紹轉向需求導向溝通與案例分享，有效提升成交率。面對客訴，你展現了高度的情緒管理與溝通技巧，從根本上解決問題。同時，你主動思考如何將經驗系統化，展現了從「解決問題」到「預見問題」的思維轉變。",
@@ -157,6 +149,12 @@
             "options": "建議參與高資產客戶維護與開發的內部培訓；與資深同事進行經驗交流，學習如何建立高層次信任關係；在與客戶互動時，練習提出更深層次的問題；將成功經驗撰寫成簡短的SOP，分享給團隊。",
             "will": "你已展現出強烈的成長意願。我相信，只要持續學習與實踐，並將業務思維從「解決」提升到「預見」的層次，將在下一階段取得突破性成就。"
           },
+          "next_quarter_plan": [
+            "在維持現有業績的基礎上，開發更多高資產客戶。",
+            "將處理客訴和跨部門溝通的經驗，整理成一份SOP，分享給團隊。",
+            "參與相關的高資產客戶維護與開發培訓。",
+            "與資深同事進行經驗交流，學習建立高層次信任關係。"
+          ],
           "overall_rating": {
             "score": 4.5,
             "reason": "你的表現超出了我的預期。除了達成甚至超越目標外，你還展現了獨立思考與主動解決問題的能力。特別是你在面對挑戰時的態度，不僅僅是完成任務，更是在其中尋找成長的機會，這一點非常難得。我相信，只要持續學習與實踐，並將業務思維從「解決」提升到「預見」的層次，將在下一階段取得突破性成就。"
@@ -216,6 +214,12 @@
         // Renders the data to the HTML document.
         document.addEventListener('DOMContentLoaded', () => {
             // Render basic info
+            document.getElementById('report-title').textContent = jsonData.report_title;
+            document.getElementById('employee-name').textContent = jsonData.employee_name;
+            document.getElementById('period').textContent = jsonData.period;
+            document.getElementById('overall-score').textContent = jsonData.overall_rating.score;
+            document.getElementById('overall-reason').textContent = jsonData.overall_rating.reason;
+
             // Render KPIs
             document.getElementById('kpi-loan-sales').textContent = jsonData.kpis.q1_loan_sales + ' 億元';
             document.getElementById('kpi-fund-growth').textContent = jsonData.kpis.q1_fund_sales_growth_rate;
@@ -227,12 +231,6 @@
                 li.textContent = item;
                 actionPlanContainer.appendChild(li);
             });
-
-            document.getElementById('report-title').textContent = jsonData.report_title;
-            document.getElementById('employee-name').textContent = jsonData.employee_name;
-            document.getElementById('period').textContent = jsonData.period;
-            document.getElementById('overall-score').textContent = jsonData.overall_rating.score;
-            document.getElementById('overall-reason').textContent = jsonData.overall_rating.reason;
 
             // Render STAR framework
             const starContainer = document.getElementById('star-analysis');
@@ -323,8 +321,8 @@
             }));
             const pointColors = jsonData.capabilities.scatter_plot.map(item => improvementColors[item.improvement]);
             const scatterScores = scatterData.map(item => item.x);
-            const scatterMin = Math.floor(Math.min(...scatterScores) * 10) / 10;
-            const scatterMax = Math.ceil(Math.max(...scatterScores) * 10) / 10;
+            const scatterMin = Math.min(...scatterScores);
+            const scatterMax = Math.max(...scatterScores);
             new Chart(scatterCtx, {
                 type: 'scatter',
                 data: {
@@ -343,13 +341,15 @@
                             type: 'linear',
                             position: 'bottom',
                             title: { display: true, text: '能力評分' },
-                            min: scatterMin,
-                            max: scatterMax
+                            min: scatterMin - 0.5, // 再次擴大邊界以確保完整顯示
+                            max: scatterMax + 0.5  // 再次擴大邊界以確保完整顯示
                         },
                         y: {
                             type: 'linear',
                             position: 'left',
                             title: { display: true, text: '成長潛力' },
+                            min: 0.5, // 確保Y軸數據點不會被切到
+                            max: 3.5, // 確保Y軸數據點不會被切到
                             ticks: {
                                 callback: function(value, index, values) {
                                     return value === 1 ? '高' : value === 2 ? '中' : '低';
