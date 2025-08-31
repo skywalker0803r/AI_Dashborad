@@ -299,13 +299,13 @@
                     responsive: true,
                     maintainAspectRatio: false,
                     scales: {
-                        x: {
-                            type: 'linear',
-                            position: 'bottom',
-                            title: { display: true, text: '能力評分' },
-                            min: scatterMin,
-                            max: scatterMax
-                        },
+                    x: {
+                        type: 'linear',
+                        position: 'bottom',
+                        title: { display: true, text: '能力評分' },
+                        min: scatterMin - 0.2, // 加大邊界以顯示完整資料點
+                        max: scatterMax + 0.2  // 加大邊界以顯示完整資料點
+                    },
                         y: {
                             type: 'linear',
                             position: 'left',
