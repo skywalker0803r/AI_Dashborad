@@ -57,6 +57,17 @@
                 </div>
             </div>
         </section>
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+            <div class="bg-indigo-50 p-6 rounded-lg shadow">
+                <h2 class="text-2xl font-bold text-indigo-700 mb-2">本季放貸業績</h2>
+                <p class="text-xl font-medium" id="kpi-loan-sales"></p>
+            </div>
+            <div class="bg-purple-50 p-6 rounded-lg shadow">
+                <h2 class="text-2xl font-bold text-purple-700 mb-2">基金銷售成長率</h2>
+                <p class="text-xl font-medium" id="kpi-fund-growth"></p>
+            </div>
+        </section>
+
 
         <section class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
             <div class="bg-gray-50 p-6 rounded-lg shadow">
@@ -106,7 +117,13 @@
             </div>
         </section>
 
-        <section class="bg-blue-900 text-white p-8 rounded-lg shadow-xl">
+        
+        <section class="bg-gray-50 p-6 rounded-lg shadow mb-12">
+            <h2 class="text-2xl font-bold text-gray-800 border-b-2 border-gray-200 pb-2 mb-4">下一季行動計畫</h2>
+            <ul id="action-plan" class="space-y-2 list-disc list-inside text-gray-700"></ul>
+        </section>
+
+<section class="bg-blue-900 text-white p-8 rounded-lg shadow-xl">
             <h2 class="text-3xl font-bold mb-4">總結與評語：洞見、策略與行動</h2>
             <p class="text-lg leading-relaxed mb-4" id="overall-reason"></p>
         </section>
@@ -117,11 +134,22 @@
           "report_title": "績效報告：洞見、策略與行動",
           "employee_name": "王小明",
           "period": "2025年第一季度",
-          "star_analysis": {
+          
+          "kpis": {
+            "q1_loan_sales": 1.25,
+            "q1_fund_sales_growth_rate": "25%"
+          },
+          "next_quarter_plan": [
+            "在維持現有業績的基礎上，開發更多高資產客戶。",
+            "將處理客訴和跨部門溝通的經驗，整理成一份SOP，分享給團隊。",
+            "參與相關的高資產客戶維護與開發培訓。",
+            "與資深同事進行經驗交流，學習建立高層次信任關係。"
+],
+"star_analysis": {
             "situation": "在本季度，市場利率波動較大，客戶對貸款與基金產品持觀望態度。同時，面對複雜的客戶財務狀況與跨部門溝通障礙，需要靈活應對。",
             "task": "核心任務為達成放貸與基金銷售雙重目標，並有效處理複雜案件與客訴，同時維繫並開發高資產客戶。",
             "action": "在放貸業務上，你主動透過「說故事」方式向風控部門溝通，解決複雜案件的阻力。在基金銷售上，你從單純產品介紹轉向需求導向溝通與案例分享，有效提升成交率。面對客訴，你展現了高度的情緒管理與溝通技巧，從根本上解決問題。同時，你主動思考如何將經驗系統化，展現了從「解決問題」到「預見問題」的思維轉變。",
-            "result": "本季度成功超額完成了放貸與基金銷售的雙重目標。多筆大額貸款順利放款，基金銷售的客戶成交數與金額均有顯著成長。透過有效的溝通與協調，不僅增強了客戶信任，也提升了部門協作效率，將單一客訴轉化為流程優化機會。"
+            "result": "本季度成功超額完成了放貸與基金銷售的雙重目標。多筆大額貸款順利放款，放貸總額達到 1.25 億，基金銷售的客戶成交數與金額均有顯著成長，成長率達 25%。透過有效的溝通與協調，不僅增強了客戶信任，也提升了部門協作效率，將單一客訴轉化為流程優化機會。"
           },
           "grow_evaluation": {
             "goal": "下一階段目標為不僅是維持現有業績，更要著眼於提升客戶的平均資產規模，並將處理客訴的經驗系統化，轉化為更完善的服務流程與內部知識庫。",
@@ -188,6 +216,18 @@
         // Renders the data to the HTML document.
         document.addEventListener('DOMContentLoaded', () => {
             // Render basic info
+            // Render KPIs
+            document.getElementById('kpi-loan-sales').textContent = jsonData.kpis.q1_loan_sales + ' 億元';
+            document.getElementById('kpi-fund-growth').textContent = jsonData.kpis.q1_fund_sales_growth_rate;
+            
+            // Render Action Plan
+            const actionPlanContainer = document.getElementById('action-plan');
+            jsonData.next_quarter_plan.forEach(item => {
+                const li = document.createElement('li');
+                li.textContent = item;
+                actionPlanContainer.appendChild(li);
+            });
+
             document.getElementById('report-title').textContent = jsonData.report_title;
             document.getElementById('employee-name').textContent = jsonData.employee_name;
             document.getElementById('period').textContent = jsonData.period;
@@ -299,13 +339,13 @@
                     responsive: true,
                     maintainAspectRatio: false,
                     scales: {
-                    x: {
-                        type: 'linear',
-                        position: 'bottom',
-                        title: { display: true, text: '能力評分' },
-                        min: scatterMin - 0.2, // 加大邊界以顯示完整資料點
-                        max: scatterMax + 0.2  // 加大邊界以顯示完整資料點
-                    },
+                        x: {
+                            type: 'linear',
+                            position: 'bottom',
+                            title: { display: true, text: '能力評分' },
+                            min: scatterMin,
+                            max: scatterMax
+                        },
                         y: {
                             type: 'linear',
                             position: 'left',
