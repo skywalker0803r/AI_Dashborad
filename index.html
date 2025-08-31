@@ -68,6 +68,23 @@
                 <p class="text-xl font-medium" id="kpi-fund-growth"></p>
             </div>
         </section>
+        
+        <section class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <h2 class="text-2xl font-bold text-orange-700 text-center mb-4">客戶生命週期價值 (CLV) 分析</h2>
+                <p class="text-center text-gray-600 mb-4" id="clv-analysis-text"></p>
+                <div class="relative h-64 md:h-96">
+                    <canvas id="clvChart"></canvas>
+                </div>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <h2 class="text-2xl font-bold text-teal-700 text-center mb-4">知識分享與團隊影響力</h2>
+                <div class="relative h-64 md:h-96">
+                    <canvas id="teamImpactChart"></canvas>
+                </div>
+            </div>
+        </section>
+
 
         <section class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
             <div class="bg-gray-50 p-6 rounded-lg shadow">
@@ -136,6 +153,17 @@
           "kpis": {
             "q1_loan_sales": 1.25,
             "q1_fund_sales_growth_rate": "25%"
+          },
+          "clv_analysis": {
+            "text": "本季度王小明成功將 3 個舊客戶的平均資產配置規模提升 15%，顯示出其深耕客戶關係的卓越能力。",
+            "data": [
+                { "name": "新客戶", "value": 70 },
+                { "name": "舊客戶", "value": 120 }
+            ]
+          },
+          "team_impact": {
+            "labels": ["知識分享次數", "團隊協作分數", "SOP採用率"],
+            "data": [5, 4.8, 85]
           },
           "star_analysis": {
             "situation": "在本季度，市場利率波動較大，客戶對貸款與基金產品持觀望態度。同時，面對複雜的客戶財務狀況與跨部門溝通障礙，需要靈活應對。",
@@ -415,6 +443,74 @@
                 span.style.opacity = opacity;
                 span.style.backgroundColor = `hsl(${hue}, 70%, 90%)`;
                 wordCloudContainer.appendChild(span);
+            });
+            
+            // Draw CLV Chart
+            const clvCtx = document.getElementById('clvChart').getContext('2d');
+            document.getElementById('clv-analysis-text').textContent = jsonData.clv_analysis.text;
+            new Chart(clvCtx, {
+                type: 'pie',
+                data: {
+                    labels: jsonData.clv_analysis.data.map(d => d.name),
+                    datasets: [{
+                        data: jsonData.clv_analysis.data.map(d => d.value),
+                        backgroundColor: ['#f59e0b', '#10b981'],
+                        borderColor: '#fff',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'top' },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    label += context.parsed;
+                                    return label + ' 萬';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Draw Team Impact Chart
+            const teamImpactCtx = document.getElementById('teamImpactChart').getContext('2d');
+            new Chart(teamImpactCtx, {
+                type: 'bar',
+                data: {
+                    labels: jsonData.team_impact.labels,
+                    datasets: [{
+                        label: '團隊貢獻度',
+                        data: jsonData.team_impact.data,
+                        backgroundColor: ['#3b82f6', '#14b8a6', '#f59e0b'],
+                        borderColor: ['#2563eb', '#0d9488', '#d97706'],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 10,
+                            title: {
+                                display: true,
+                                text: '評分'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false }
+                    }
+                }
             });
         });
     </script>
